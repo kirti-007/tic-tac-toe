@@ -2,7 +2,7 @@ var board;
 var playerO = "O";
 var playerX = "X";
 var currPlayer = playerX;
-var gaeOver = false;
+var gameOver = false;
 
 window.onload = function() {
     Game();
@@ -34,7 +34,7 @@ function Game(){
 }
 
 function setTile(){
-    if(gaeOver){
+    if(gameOver){
         return;
     }
     let coords = this.id.split("-");
@@ -57,14 +57,23 @@ function setTile(){
 }
 
 function checkWinner(){
+    for(let i = 0; i < 3; i++){
+        for(let j = 0; j < 3; j++){
+            if(gameOver == false && board[i][j] != ' '){
+                let tile = document.getElementById(i.toString() + '-' + j.toString());
+                tile.classList.add("draw");
+            }       
+        }
+    }
     // for horizontal
     for(let r = 0; r < 3; r++){
         if(board[r][0] == board[r][1] && board[r][1] == board[r][2] && board[r][0] != ' '){
             for (let index = 0; index < 3; index++) {
                 let tile = document.getElementById(r.toString() + '-' + index.toString());
                 tile.classList.add("winner");
+                tile.classList.remove("draw");
             }
-            gaeOver = true;
+            gameOver = true;
             return;
         }
     }
@@ -74,8 +83,9 @@ function checkWinner(){
             for (let index = 0; index < 3; index++) {
                 let tile = document.getElementById(index.toString() + '-' + c.toString());
                 tile.classList.add("winner");
+                tile.classList.remove("draw");
             }
-            gaeOver = true;
+            gameOver = true;
             return;
         }
     }
@@ -84,8 +94,9 @@ function checkWinner(){
         for (let index = 0; index < 3; index++) {
             let tile = document.getElementById(index.toString() + '-' + index.toString());
             tile.classList.add("winner");
+            tile.classList.remove("draw");
         }
-        gaeOver = true;
+        gameOver = true;
         return;
     }
      // for anti-diagonal
@@ -93,14 +104,18 @@ function checkWinner(){
        
             let tile = document.getElementById("0-2");
             tile.classList.add("winner");
+            tile.classList.remove("draw");
             tile = document.getElementById("1-1");
             tile.classList.add("winner");
+            tile.classList.remove("draw");
             tile = document.getElementById("2-0");
             tile.classList.add("winner");
+            tile.classList.remove("draw");
         
-        gaeOver = true;
+        gameOver = true;
         return;
     }
 
-   
+    
+    
 }
